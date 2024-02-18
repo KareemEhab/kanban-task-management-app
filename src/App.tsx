@@ -1,9 +1,14 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Board from "./components/Board";
+import BoardDetails from "./components/Board";
+import useBoards from "./hooks/useBoards";
+import { useState } from "react";
 
 function App() {
+  const { boards, isLoading, createBoard, updateBoard } = useBoards();
+  const [selectedBoard, setSelectedBoard] = useState(0);
+
   return (
     <Grid
       templateAreas={{
@@ -28,7 +33,13 @@ function App() {
           overflowY="scroll"
           css={{ "&::-webkit-scrollbar": { display: "none" } }}
         >
-          <Sidebar />
+          <Sidebar
+            boards={boards}
+            selectedBoard={selectedBoard}
+            setSelectedBoard={setSelectedBoard}
+            isLoading={isLoading}
+            createBoard={createBoard}
+          />
         </GridItem>
       </Show>
       <GridItem
@@ -38,7 +49,11 @@ function App() {
         overflowY="scroll"
         css={{ "&::-webkit-scrollbar": { display: "none" } }}
       >
-        <Board />
+        <BoardDetails
+          board={boards[selectedBoard]}
+          isLoading={isLoading}
+          updateBoard={updateBoard}
+        />
       </GridItem>
     </Grid>
   );

@@ -1,8 +1,18 @@
 import { HStack } from "@chakra-ui/react";
 import Column from "./Column";
 import AddColumn from "./AddColumn";
+import { Board } from "../hooks/useBoards";
 
-const Board = () => {
+interface Props {
+  board: Board;
+  isLoading: boolean;
+  updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
+}
+
+const BoardDetails = ({ board, isLoading, updateBoard }: Props) => {
+  if (isLoading) return null;
+  if (!board) return null;
+
   return (
     <HStack
       height="100%"
@@ -11,12 +21,19 @@ const Board = () => {
       paddingLeft="1.5rem"
       gap={6}
     >
-      <Column />
-      <Column />
-      <Column />
-      <AddColumn />
+      {board.columns.map((column) => {
+        return (
+          <Column
+            key={column}
+            tasks={board.tasks.filter((task) => task.currentStatus === column)}
+            boardName={column}
+          />
+        );
+      })}
+
+      <AddColumn board={board} updateBoard={updateBoard} />
     </HStack>
   );
 };
 
-export default Board;
+export default BoardDetails;

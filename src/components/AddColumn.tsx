@@ -1,8 +1,16 @@
-import { Box, VStack, Text } from "@chakra-ui/react";
+import { Box, VStack, Text, useDisclosure } from "@chakra-ui/react";
+import AddColumnModal from "./AddColumnModal";
+import { Board } from "../hooks/useBoards";
 
-const AddColumn = () => {
+interface Props {
+  board: Board;
+  updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
+}
+
+const AddColumn = ({ board, updateBoard }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box height="100%" paddingY="2.4rem" userSelect="none">
+    <Box height="100%" paddingY="2.4rem" userSelect="none" onClick={onOpen}>
       <VStack
         height="100%"
         width="17.5rem"
@@ -25,6 +33,12 @@ const AddColumn = () => {
           + New Column
         </Text>
       </VStack>
+      <AddColumnModal
+        isOpen={isOpen}
+        onClose={onClose}
+        board={board}
+        updateBoard={updateBoard}
+      />
     </Box>
   );
 };

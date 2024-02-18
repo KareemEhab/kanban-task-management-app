@@ -15,18 +15,19 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
-import { useRef, useState } from "react";
 import { Board } from "../hooks/useBoards";
+import { useRef, useState } from "react";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  createBoard: (board: Partial<Board>) => Promise<void>;
+  board: Board;
+  updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
 }
 
-const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
+const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
   const boardName = useRef<HTMLInputElement>(null);
-  const [columns, setColumns] = useState(["TODO", "DOING"]);
+  const [columns, setColumns] = useState(board.columns);
   const toast = useToast();
 
   const handleInputChange = (index: number, value: string) => {
@@ -47,20 +48,20 @@ const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
   };
 
   const handleCloseModal = () => {
-    setColumns(["TODO", "DOING"]); // Reset the state when modal is closed
+    setColumns(board.columns); // Reset the state when modal is closed
     onClose(); // Call onClose to close the modal
   };
 
-  const handleCreateBoard = () => {
-    const board: Partial<Board> = {
+  const handleUpdateBoard = () => {
+    const tempBoard: Partial<Board> = {
       name: boardName.current?.value || "",
       columns: columns,
     };
     onClose();
-    toast.promise(createBoard(board), {
-      success: { title: "Board created", position: "top-right" },
+    toast.promise(updateBoard(tempBoard, board._id), {
+      success: { title: "Board updated", position: "top-right" },
       error: { title: "An error occured", position: "top-right" },
-      loading: { title: "Creating board...", position: "top-right" },
+      loading: { title: "Updating board...", position: "top-right" },
     });
   };
 
@@ -68,12 +69,17 @@ const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
     <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
       <ModalOverlay />
       <ModalContent padding="0.5rem" width="30rem" maxW="full">
-        <ModalHeader fontWeight="bold">Add new board</ModalHeader>
+        <ModalHeader fontWeight="bold">Edit board</ModalHeader>
         <ModalBody>
           <VStack>
             <FormControl>
               <FormLabel>Board Name</FormLabel>
-              <Input placeholder="e.g. Web Design" ref={boardName} required />
+              <Input
+                value={board.name}
+                placeholder="e.g. Web Design"
+                ref={boardName}
+                onChange={() => {}}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Board Columns</FormLabel>
@@ -109,9 +115,9 @@ const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
               borderRadius="full"
               marginY="1rem"
               _hover={{ bg: "purple.500" }}
-              onClick={handleCreateBoard}
+              onClick={handleUpdateBoard}
             >
-              Create New Board
+              Save Board
             </Button>
           </VStack>
         </ModalBody>
@@ -120,4 +126,4 @@ const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
   );
 };
 
-export default AddBoardModal;
+export default AddColumnModal;

@@ -5,17 +5,24 @@ interface Props {
   color: string;
   icon: IconType;
   children: string;
+  isSelected: boolean;
   onClick: () => void;
 }
 
-const SidebarBtn = ({ color, icon: Icon, children, onClick }: Props) => {
+const SidebarBtn = ({
+  color,
+  icon: Icon,
+  children,
+  isSelected,
+  onClick,
+}: Props) => {
   return (
     <Button
       width="100%"
       borderRadius="full"
       borderTopLeftRadius="0"
       borderBottomLeftRadius="0"
-      bg="gray.700"
+      bg={isSelected ? "purple.800" : "gray.700"}
       paddingLeft="1.5rem"
       paddingY="1.5rem"
       onClick={onClick}
@@ -35,7 +42,7 @@ const SidebarBtn = ({ color, icon: Icon, children, onClick }: Props) => {
         fontSize="1rem"
         textAlign="left"
         marginLeft="0.5rem"
-        color={color}
+        color={isSelected ? "white" : color}
       >
         {children}
       </Text>

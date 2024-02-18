@@ -4,6 +4,7 @@ import {
   Switch,
   Text,
   VStack,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import { WiDaySunny } from "react-icons/wi";
@@ -12,9 +13,27 @@ import SidebarBtn from "./SidebarBtn";
 import { CiGrid32 } from "react-icons/ci";
 import { BiSolidHide } from "react-icons/bi";
 import AddBoardModal from "./AddBoardModal";
+import { Board } from "../hooks/useBoards";
 
-const Sidebar = () => {
+interface Props {
+  boards: Board[];
+  isLoading: boolean;
+  selectedBoard: number;
+  setSelectedBoard: (index: number) => void;
+  createBoard: (board: Partial<Board>) => Promise<void>;
+}
+
+const Sidebar = ({
+  boards,
+  isLoading,
+  selectedBoard,
+  setSelectedBoard,
+  createBoard,
+}: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { toggleColorMode, colorMode } = useColorMode();
+
+  if (isLoading) return;
   return (
     <VStack minHeight="100%" justify="space-between" width="100%" bg="gray.700">
       <Box width="100%">
@@ -22,16 +41,34 @@ const Sidebar = () => {
           ALL BOARDS (2)
         </Text>
         <VStack minW="100%" paddingRight="1.5rem" marginTop="1.5rem" gap={0}>
-          <SidebarBtn color="gray.400" icon={CiGrid32} onClick={() => {}}>
-            Platform Launch
-          </SidebarBtn>
-          <SidebarBtn color="gray.400" icon={CiGrid32} onClick={() => {}}>
-            Marketing Plan
-          </SidebarBtn>
-          <SidebarBtn color="purple.800" icon={CiGrid32} onClick={onOpen}>
+          {boards.map((board, index) => {
+            return (
+              <SidebarBtn
+                key={board._id}
+                color="gray.400"
+                icon={CiGrid32}
+                isSelected={selectedBoard === index}
+                onClick={() => {
+                  setSelectedBoard(index);
+                }}
+              >
+                {board.name}
+              </SidebarBtn>
+            );
+          })}
+          <SidebarBtn
+            color="purple.800"
+            icon={CiGrid32}
+            isSelected={false}
+            onClick={onOpen}
+          >
             + Create New Board
           </SidebarBtn>
-          <AddBoardModal isOpen={isOpen} onClose={onClose} />
+          <AddBoardModal
+            isOpen={isOpen}
+            onClose={onClose}
+            createBoard={createBoard}
+          />
         </VStack>
       </Box>
       <Box width="100%" marginBottom="1.5rem">
@@ -47,14 +84,24 @@ const Sidebar = () => {
             <Text fontSize="1.8rem">
               <WiDaySunny />
             </Text>
-            <Switch colorScheme="purple" defaultChecked />
+            <Switch
+              colorScheme="purple"
+              defaultChecked
+              isChecked={colorMode === "dark"}
+              onChange={toggleColorMode}
+            />
             <Text fontSize="1.5rem">
               <MdDarkMode />
             </Text>
           </HStack>
         </HStack>
         <Box width="100%" paddingRight="1.5rem">
-          <SidebarBtn color="gray.400" icon={BiSolidHide} onClick={() => {}}>
+          <SidebarBtn
+            color="gray.400"
+            icon={BiSolidHide}
+            isSelected={false}
+            onClick={() => {}}
+          >
             Hide Sidebar
           </SidebarBtn>
         </Box>

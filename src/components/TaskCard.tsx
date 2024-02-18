@@ -1,10 +1,15 @@
 import { Card, CardBody, Text } from "@chakra-ui/react";
+import { Task } from "../hooks/useBoards";
 
-const TaskCard = () => {
+interface Props {
+  task: Task;
+}
+
+const TaskCard = ({ task }: Props) => {
   return (
     <Card
       width="17.5rem"
-      paddingY="0.25rem"
+      paddingBottom="0.25rem"
       _hover={{
         cursor: "pointer",
         "& .button-text": {
@@ -13,11 +18,12 @@ const TaskCard = () => {
       }}
     >
       <CardBody userSelect="none">
-        <Text className="button-text" fontWeight="bold">
-          Build UI for onboarding flow
+        <Text className="button-text" fontWeight="bold" marginBottom="0.25rem">
+          {task.name}
         </Text>
         <Text fontSize="0.8rem" fontWeight="bold" color="gray.400">
-          1 of 3 subtasks
+          {task.subTasks.filter((subTask) => subTask.isDone === true).length} of{" "}
+          {task.subTasks.length} subtasks
         </Text>
       </CardBody>
     </Card>
