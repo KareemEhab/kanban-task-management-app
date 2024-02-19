@@ -181,7 +181,7 @@ const AddTaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
             </FormControl>
             <FormControl marginTop="1rem">
               <FormLabel>Current Status</FormLabel>
-              <Select ref={statusRef}>
+              <Select ref={statusRef} defaultValue={task.currentStatus}>
                 {board.columns.map((column, index) => (
                   <option key={index} value={column}>
                     {column}

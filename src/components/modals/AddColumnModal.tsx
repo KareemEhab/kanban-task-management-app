@@ -98,7 +98,7 @@ const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
                   <HStack key={index}>
                     <Input
                       value={column}
-                      key={column + index}
+                      key={index}
                       marginBottom={3}
                       onChange={(e) => handleInputChange(index, e.target.value)}
                       fontSize="0.8rem"

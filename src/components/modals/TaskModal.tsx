@@ -52,7 +52,7 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
 
   useEffect(() => {
     setSubtasks(task.subTasks);
-  }, []);
+  }, [isOpen, board]);
 
   const handleCloseModal = () => {
     const updatedTasks: Partial<Task>[] = board.tasks
