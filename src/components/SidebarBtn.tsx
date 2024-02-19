@@ -33,13 +33,19 @@ const SidebarBtn = ({
         },
       }}
     >
-      <Text className="button-text" fontSize="1.3rem" color={color}>
+      <Text
+        className="button-text"
+        fontSize="1.3rem"
+        fontWeight="bold"
+        color={color}
+      >
         <Icon size="1.3rem" />
       </Text>
       <Text
         className="button-text"
         width="100%"
         fontSize="1rem"
+        fontWeight="bold"
         textAlign="left"
         marginLeft="0.5rem"
         color={isSelected ? "white" : color}

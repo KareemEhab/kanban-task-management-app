@@ -2,7 +2,7 @@ import { Card, CardBody, Text } from "@chakra-ui/react";
 import { Task } from "../hooks/useBoards";
 
 interface Props {
-  task: Task;
+  task: Partial<Task>;
 }
 
 const TaskCard = ({ task }: Props) => {
@@ -22,8 +22,8 @@ const TaskCard = ({ task }: Props) => {
           {task.name}
         </Text>
         <Text fontSize="0.8rem" fontWeight="bold" color="gray.400">
-          {task.subTasks.filter((subTask) => subTask.isDone === true).length} of{" "}
-          {task.subTasks.length} subtasks
+          {task.subTasks?.filter((subTask) => subTask.isDone === true).length}{" "}
+          of {task.subTasks?.length} subtasks
         </Text>
       </CardBody>
     </Card>
