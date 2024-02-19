@@ -45,6 +45,11 @@ const useBoards = () => {
     setBoards(updatedBoards);
   }
 
+  async function deleteBoard(_id: string) {
+    await apiClient.delete(`/boards/${_id}`);
+    setBoards((prevBoards) => prevBoards.filter((board) => board._id !== _id));
+  }
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -66,7 +71,7 @@ const useBoards = () => {
     return () => controller.abort();
   }, []);
 
-  return { boards, error, isLoading, createBoard, updateBoard };
+  return { boards, error, isLoading, createBoard, updateBoard, deleteBoard };
 };
 
 export default useBoards;

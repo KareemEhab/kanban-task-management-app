@@ -6,8 +6,14 @@ import useBoards from "./hooks/useBoards";
 import { useState } from "react";
 
 function App() {
-  const { boards, isLoading, createBoard, updateBoard } = useBoards();
+  const { boards, isLoading, createBoard, updateBoard, deleteBoard } =
+    useBoards();
   const [selectedBoard, setSelectedBoard] = useState(0);
+
+  const handleDeleteBoard = (_id: string) => {
+    setSelectedBoard(0);
+    return deleteBoard(_id);
+  };
 
   return (
     <Grid
@@ -27,6 +33,7 @@ function App() {
           board={boards[selectedBoard]}
           isLoading={isLoading}
           updateBoard={updateBoard}
+          handleDeleteBoard={handleDeleteBoard}
         />
       </GridItem>
       <Show above="lg">

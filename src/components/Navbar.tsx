@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   HStack,
   IconButton,
@@ -14,15 +13,39 @@ import {
 import { CiMenuKebab } from "react-icons/ci";
 import { Board } from "../hooks/useBoards";
 import AddTaskModal from "./AddTaskModal";
+import AddColumnModal from "./AddColumnModal";
+import DeleteBoardModal from "./DeleteBoardModal";
 
 interface Props {
   board: Board;
   isLoading: boolean;
   updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
+  handleDeleteBoard: (_id: string) => Promise<void>;
 }
 
-const Navbar = ({ board, isLoading, updateBoard }: Props) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const Navbar = ({
+  board,
+  isLoading,
+  updateBoard,
+  handleDeleteBoard,
+}: Props) => {
+  const {
+    isOpen: isAddTaskOpen,
+    onOpen: onAddTaskOpen,
+    onClose: onAddTaskClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isEditBoardOpen,
+    onOpen: onEditBoardOpen,
+    onClose: onEditBoardClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isDeleteBoardOpen,
+    onOpen: onDeleteBoardOpen,
+    onClose: onDeleteBoardClose,
+  } = useDisclosure();
 
   if (isLoading) return null;
   if (!board) return null;
@@ -37,12 +60,12 @@ const Navbar = ({ board, isLoading, updateBoard }: Props) => {
         <Text fontSize="1.5rem" fontWeight="bold">
           {board.name}
         </Text>
-        <Box>
+        <HStack>
           <Button
             borderRadius="full"
             padding="1.5rem"
             bg="purple.800"
-            onClick={onOpen}
+            onClick={onAddTaskOpen}
           >
             + Add New Task
           </Button>
@@ -55,19 +78,31 @@ const Navbar = ({ board, isLoading, updateBoard }: Props) => {
               fontSize="1.5rem"
             />
             <MenuList>
-              <MenuItem>Menu 1</MenuItem>
-              <MenuItem>New Window</MenuItem>
-              <MenuItem>Open Closed Tab</MenuItem>
-              <MenuItem>Open File</MenuItem>
+              <MenuItem onClick={onEditBoardOpen}>Edit board</MenuItem>
+              <MenuItem color="red" onClick={onDeleteBoardOpen}>
+                Delete board
+              </MenuItem>
             </MenuList>
           </Menu>
-        </Box>
+        </HStack>
       </HStack>
       <AddTaskModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isAddTaskOpen}
+        onClose={onAddTaskClose}
         board={board}
         updateBoard={updateBoard}
+      />
+      <AddColumnModal
+        isOpen={isEditBoardOpen}
+        onClose={onEditBoardClose}
+        board={board}
+        updateBoard={updateBoard}
+      />
+      <DeleteBoardModal
+        isOpen={isDeleteBoardOpen}
+        onClose={onDeleteBoardClose}
+        board={board}
+        handleDeleteBoard={handleDeleteBoard}
       />
     </HStack>
   );
