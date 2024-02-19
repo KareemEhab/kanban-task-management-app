@@ -22,6 +22,8 @@ import {
 import { Board, Task, SubTask } from "../../hooks/useBoards";
 import { useEffect, useRef, useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
+import DeleteTaskModal from "./DeleteTaskModal";
+import EditTaskModal from "./EditTaskModal";
 
 interface Props {
   isOpen: boolean;
@@ -70,7 +72,7 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
     if (JSON.stringify(board) !== JSON.stringify(updatedBoard))
       toast.promise(updateBoard(updatedBoard, board._id), {
         success: { title: "Changes saved.", position: "top-right" },
-        error: { title: "An error has occured", position: "top-right" },
+        error: { title: "An error has occured.", position: "top-right" },
         loading: { title: "Saving changes...", position: "top-right" },
       });
 
@@ -95,7 +97,7 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
       <ModalContent padding="0.75rem" width="30rem" maxW="full">
         <HStack>
           <ModalHeader fontWeight="bold" flex="1">
-            Add New Task
+            {task?.name}
           </ModalHeader>
           <Menu>
             <MenuButton
@@ -106,8 +108,18 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
               fontSize="1.5rem"
             />
             <MenuList>
-              <MenuItem onClick={onEditTaskOpen}>Edit Task</MenuItem>
-              <MenuItem color="red" onClick={onDeleteTaskOpen}>
+              <MenuItem
+                color="gray.500"
+                fontWeight="bold"
+                onClick={onEditTaskOpen}
+              >
+                Edit Task
+              </MenuItem>
+              <MenuItem
+                color="red.500"
+                fontWeight="bold"
+                onClick={onDeleteTaskOpen}
+              >
                 Delete Task
               </MenuItem>
             </MenuList>
@@ -164,6 +176,20 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
               </Select>
             </FormControl>
           </VStack>
+          <DeleteTaskModal
+            isOpen={isDeleteTaskOpen}
+            onClose={onDeleteTaskClose}
+            board={board}
+            task={task}
+            updateBoard={updateBoard}
+          />
+          <EditTaskModal
+            isOpen={isEditTaskOpen}
+            onClose={onEditTaskClose}
+            board={board}
+            task={task}
+            updateBoard={updateBoard}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>

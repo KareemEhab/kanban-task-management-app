@@ -27,12 +27,12 @@ interface Props {
 
 const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
   const boardName = useRef<HTMLInputElement>(null);
-  const [columns, setColumns] = useState(board?.columns);
+  const [columns, setColumns] = useState<string[]>();
   const toast = useToast();
 
   useEffect(() => {
     setColumns(board?.columns || []);
-  }, [isOpen, board?.columns]);
+  }, [isOpen]);
 
   const handleInputChange = (index: number, value: string) => {
     let updatedColumns = [...(columns ?? [])];
@@ -86,10 +86,9 @@ const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
             <FormControl>
               <FormLabel>Board Name</FormLabel>
               <Input
-                value={board?.name}
                 placeholder="e.g. Web Design"
                 ref={boardName}
-                onChange={() => {}}
+                defaultValue={board?.name}
               />
             </FormControl>
             <FormControl>
@@ -99,7 +98,7 @@ const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
                   <HStack key={index}>
                     <Input
                       value={column}
-                      key={index}
+                      key={column + index}
                       marginBottom={3}
                       onChange={(e) => handleInputChange(index, e.target.value)}
                       fontSize="0.8rem"

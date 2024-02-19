@@ -78,8 +78,18 @@ const Navbar = ({
               fontSize="1.5rem"
             />
             <MenuList>
-              <MenuItem onClick={onEditBoardOpen}>Edit board</MenuItem>
-              <MenuItem color="red" onClick={onDeleteBoardOpen}>
+              <MenuItem
+                color="gray.500"
+                fontWeight="bold"
+                onClick={onEditBoardOpen}
+              >
+                Edit board
+              </MenuItem>
+              <MenuItem
+                color="red.500"
+                fontWeight="bold"
+                onClick={onDeleteBoardOpen}
+              >
                 Delete board
               </MenuItem>
             </MenuList>

@@ -10,29 +10,37 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { Board } from "../../hooks/useBoards";
+import { Board, Task } from "../../hooks/useBoards";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   board: Board;
-  handleDeleteBoard: (_id: string) => Promise<void>;
+  task: Partial<Task>;
+  updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
 }
 
-const DeleteBoardModal = ({
+const DeleteTaskModal = ({
   isOpen,
   onClose,
   board,
-  handleDeleteBoard,
+  task,
+  updateBoard,
 }: Props) => {
   const toast = useToast();
 
-  const handleBoardDelete = () => {
+  const handleTaskDelete = () => {
+    const updatedBoard: Partial<Board> = {
+      ...board,
+      tasks: [
+        ...board.tasks.filter((currentTask) => currentTask._id !== task._id),
+      ],
+    };
     onClose();
-    toast.promise(handleDeleteBoard(board._id), {
-      success: { title: "Board deleted", position: "top-right" },
-      error: { title: "An error occured", position: "top-right" },
-      loading: { title: "Deleting board...", position: "top-right" },
+    toast.promise(updateBoard(updatedBoard, board._id), {
+      success: { title: "Task deleted.", position: "top-right" },
+      error: { title: "An error occured.", position: "top-right" },
+      loading: { title: "Deleting task...", position: "top-right" },
     });
   };
 
@@ -41,13 +49,13 @@ const DeleteBoardModal = ({
       <ModalOverlay />
       <ModalContent padding="1rem" width="30rem" maxW="full">
         <ModalHeader fontWeight="bold" color="red.800">
-          Delete this board?
+          Delete this task?
         </ModalHeader>
         <ModalBody>
           <VStack>
             <Text color="gray.500" fontSize="0.85rem">
-              Are you sure you want to delete the "{board.name}" board? This
-              action will remove all columns and tasks and cannot be reversed.
+              Are you sure you want to delete the "{task?.name}" task and its
+              subtasks? This action cannot be reversed.
             </Text>
             <HStack width={"100%"}>
               <Button
@@ -56,7 +64,7 @@ const DeleteBoardModal = ({
                 borderRadius="full"
                 marginY="1rem"
                 _hover={{ bg: "purple.500" }}
-                onClick={handleBoardDelete}
+                onClick={handleTaskDelete}
               >
                 Delete
               </Button>
@@ -77,4 +85,4 @@ const DeleteBoardModal = ({
   );
 };
 
-export default DeleteBoardModal;
+export default DeleteTaskModal;
