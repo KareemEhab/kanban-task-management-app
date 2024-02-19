@@ -38,7 +38,7 @@ const Sidebar = ({
     <VStack minHeight="100%" justify="space-between" width="100%" bg="gray.700">
       <Box width="100%">
         <Text color="gray.400" marginTop="1.5rem" paddingLeft="1.5rem">
-          ALL BOARDS (2)
+          ALL BOARDS ({boards?.length})
         </Text>
         <VStack minW="100%" paddingRight="1.5rem" marginTop="1.5rem" gap={0}>
           {boards?.map((board, index) => {
