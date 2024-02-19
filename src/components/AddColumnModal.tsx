@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
 import { Board } from "../hooks/useBoards";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   isOpen: boolean;
@@ -29,6 +29,10 @@ const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
   const boardName = useRef<HTMLInputElement>(null);
   const [columns, setColumns] = useState(board.columns);
   const toast = useToast();
+
+  useEffect(() => {
+    setColumns(board.columns || []);
+  }, [isOpen, board.columns]);
 
   const handleInputChange = (index: number, value: string) => {
     let updatedColumns = [...columns];

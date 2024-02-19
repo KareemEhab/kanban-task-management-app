@@ -25,8 +25,10 @@ const BoardDetails = ({ board, isLoading, updateBoard }: Props) => {
         return (
           <Column
             key={column}
+            board={board}
             tasks={board.tasks.filter((task) => task.currentStatus === column)}
             columnName={column}
+            updateBoard={updateBoard}
           />
         );
       })}

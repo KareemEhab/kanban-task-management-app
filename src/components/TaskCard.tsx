@@ -1,15 +1,25 @@
-import { Card, CardBody, Text } from "@chakra-ui/react";
-import { Task } from "../hooks/useBoards";
+import { Card, CardBody, Text, useDisclosure } from "@chakra-ui/react";
+import { Board, Task } from "../hooks/useBoards";
+import TaskModal from "./TaskModal";
 
 interface Props {
+  board: Board;
   task: Partial<Task>;
+  updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
 }
 
-const TaskCard = ({ task }: Props) => {
+const TaskCard = ({ board, task, updateBoard }: Props) => {
+  const {
+    isOpen: isTaskOpen,
+    onOpen: onTaskOpen,
+    onClose: onTaskClose,
+  } = useDisclosure();
+
   return (
     <Card
       width="17.5rem"
       paddingBottom="0.25rem"
+      onClick={onTaskOpen}
       _hover={{
         cursor: "pointer",
         "& .button-text": {
@@ -26,6 +36,13 @@ const TaskCard = ({ task }: Props) => {
           of {task.subTasks?.length} subtasks
         </Text>
       </CardBody>
+      <TaskModal
+        isOpen={isTaskOpen}
+        onClose={onTaskClose}
+        board={board}
+        task={task}
+        updateBoard={updateBoard}
+      />
     </Card>
   );
 };
