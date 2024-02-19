@@ -11,9 +11,17 @@ import {
   useToast,
   Select,
   Checkbox,
+  HStack,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { Board, Task, SubTask } from "../hooks/useBoards";
+import { Board, Task, SubTask } from "../../hooks/useBoards";
 import { useEffect, useRef, useState } from "react";
+import { CiMenuKebab } from "react-icons/ci";
 
 interface Props {
   isOpen: boolean;
@@ -27,6 +35,18 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
   const statusRef = useRef<HTMLSelectElement>(null);
   const [subtasks, setSubtasks] = useState<Partial<SubTask>[]>();
   const toast = useToast();
+
+  const {
+    isOpen: isEditTaskOpen,
+    onOpen: onEditTaskOpen,
+    onClose: onEditTaskClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isDeleteTaskOpen,
+    onOpen: onDeleteTaskOpen,
+    onClose: onDeleteTaskClose,
+  } = useDisclosure();
 
   useEffect(() => {
     setSubtasks(task.subTasks);
@@ -73,10 +93,38 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
     <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
       <ModalOverlay />
       <ModalContent padding="0.75rem" width="30rem" maxW="full">
-        <ModalHeader fontWeight="bold">Add New Task</ModalHeader>
+        <HStack>
+          <ModalHeader fontWeight="bold" flex="1">
+            Add New Task
+          </ModalHeader>
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<CiMenuKebab />}
+              bg="gray.700"
+              fontSize="1.5rem"
+            />
+            <MenuList>
+              <MenuItem onClick={onEditTaskOpen}>Edit Task</MenuItem>
+              <MenuItem color="red" onClick={onDeleteTaskOpen}>
+                Delete Task
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </HStack>
+
         <ModalBody>
           <VStack>
             <FormControl>
+              <Text
+                fontSize="0.8rem"
+                color="gray.500"
+                marginTop="0.5rem"
+                marginBottom="2rem"
+              >
+                {task?.description}
+              </Text>
               <FormLabel color="gray.500" fontSize="0.9rem">
                 Subtasks ({subtasks?.filter((subtask) => subtask.isDone).length}{" "}
                 of {subtasks?.length})

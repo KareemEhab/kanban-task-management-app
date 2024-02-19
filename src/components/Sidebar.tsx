@@ -12,7 +12,7 @@ import { MdDarkMode } from "react-icons/md";
 import SidebarBtn from "./SidebarBtn";
 import { CiGrid32 } from "react-icons/ci";
 import { BiSolidHide } from "react-icons/bi";
-import AddBoardModal from "./AddBoardModal";
+import AddBoardModal from "./modals/AddBoardModal";
 import { Board } from "../hooks/useBoards";
 
 interface Props {

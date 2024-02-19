@@ -1,6 +1,6 @@
 import { Card, CardBody, Text, useDisclosure } from "@chakra-ui/react";
 import { Board, Task } from "../hooks/useBoards";
-import TaskModal from "./TaskModal";
+import TaskModal from "./modals/TaskModal";
 
 interface Props {
   board: Board;

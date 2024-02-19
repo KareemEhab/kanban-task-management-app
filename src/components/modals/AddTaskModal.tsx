@@ -17,7 +17,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
-import { Board, Task, SubTask } from "../hooks/useBoards";
+import { Board, Task, SubTask } from "../../hooks/useBoards";
 import { useRef, useState } from "react";
 
 interface Props {

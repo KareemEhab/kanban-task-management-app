@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
 import { useRef, useState } from "react";
-import { Board } from "../hooks/useBoards";
+import { Board } from "../../hooks/useBoards";
 
 interface Props {
   isOpen: boolean;

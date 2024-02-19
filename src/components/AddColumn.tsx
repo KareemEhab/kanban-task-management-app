@@ -1,5 +1,5 @@
 import { Box, VStack, Text, useDisclosure } from "@chakra-ui/react";
-import AddColumnModal from "./AddColumnModal";
+import AddColumnModal from "./modals/AddColumnModal";
 import { Board } from "../hooks/useBoards";
 
 interface Props {

@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { CiMenuKebab } from "react-icons/ci";
 import { Board } from "../hooks/useBoards";
-import AddTaskModal from "./AddTaskModal";
-import AddColumnModal from "./AddColumnModal";
-import DeleteBoardModal from "./DeleteBoardModal";
+import AddTaskModal from "./modals/AddTaskModal";
+import AddColumnModal from "./modals/AddColumnModal";
+import DeleteBoardModal from "./modals/DeleteBoardModal";
 
 interface Props {
   board: Board | null;

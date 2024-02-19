@@ -10,7 +10,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { Board } from "../hooks/useBoards";
+import { Board } from "../../hooks/useBoards";
 
 interface Props {
   isOpen: boolean;

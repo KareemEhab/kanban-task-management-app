@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
-import { Board } from "../hooks/useBoards";
+import { Board } from "../../hooks/useBoards";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
