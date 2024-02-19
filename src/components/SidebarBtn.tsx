@@ -49,6 +49,7 @@ const SidebarBtn = ({
         textAlign="left"
         marginLeft="0.5rem"
         color={isSelected ? "white" : color}
+        overflow={"hidden"}
       >
         {children}
       </Text>
