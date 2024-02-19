@@ -17,7 +17,7 @@ import AddColumnModal from "./AddColumnModal";
 import DeleteBoardModal from "./DeleteBoardModal";
 
 interface Props {
-  board: Board;
+  board: Board | null;
   isLoading: boolean;
   updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
   handleDeleteBoard: (_id: string) => Promise<void>;

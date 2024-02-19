@@ -21,52 +21,59 @@ import { useEffect, useRef, useState } from "react";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  board: Board;
+  board: Board | null;
   updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
 }
 
 const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
   const boardName = useRef<HTMLInputElement>(null);
-  const [columns, setColumns] = useState(board.columns);
+  const [columns, setColumns] = useState(board?.columns);
   const toast = useToast();
 
   useEffect(() => {
-    setColumns(board.columns || []);
-  }, [isOpen, board.columns]);
+    setColumns(board?.columns || []);
+  }, [isOpen, board?.columns]);
 
   const handleInputChange = (index: number, value: string) => {
-    let updatedColumns = [...columns];
+    let updatedColumns = [...(columns ?? [])];
     updatedColumns[index] = value;
     setColumns(updatedColumns);
   };
 
   const handleAddColumn = () => {
-    const updatedColumns = [...columns, ""];
+    const updatedColumns = [...(columns ?? []), ""];
     setColumns(updatedColumns);
   };
 
   const handleRemoveColumn = (index: number) => {
-    const updatedColumns = [...columns];
+    const updatedColumns = [...(columns ?? [])];
     updatedColumns.splice(index, 1);
     setColumns(updatedColumns);
   };
 
   const handleCloseModal = () => {
-    setColumns(board.columns); // Reset the state when modal is closed
+    setColumns(board?.columns); // Reset the state when modal is closed
     onClose(); // Call onClose to close the modal
   };
 
   const handleUpdateBoard = () => {
     const tempBoard: Partial<Board> = {
       name: boardName.current?.value || "",
-      columns: columns,
+      columns: columns ?? [],
     };
+
     onClose();
-    toast.promise(updateBoard(tempBoard, board._id), {
-      success: { title: "Board updated", position: "top-right" },
-      error: { title: "An error occured", position: "top-right" },
-      loading: { title: "Updating board...", position: "top-right" },
-    });
+
+    if (board && board._id) {
+      toast.promise(updateBoard(tempBoard, board._id), {
+        success: { title: "Board updated", position: "top-right" },
+        error: { title: "An error occurred", position: "top-right" },
+        loading: { title: "Updating board...", position: "top-right" },
+      });
+    } else {
+      // Handle the case where board or board._id is undefined
+      console.error("Board or board ID is undefined");
+    }
   };
 
   return (
@@ -79,7 +86,7 @@ const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
             <FormControl>
               <FormLabel>Board Name</FormLabel>
               <Input
-                value={board.name}
+                value={board?.name}
                 placeholder="e.g. Web Design"
                 ref={boardName}
                 onChange={() => {}}
@@ -87,7 +94,7 @@ const AddColumnModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
             </FormControl>
             <FormControl>
               <FormLabel>Board Columns</FormLabel>
-              {columns.map((column, index) => {
+              {columns?.map((column, index) => {
                 return (
                   <HStack key={index}>
                     <Input

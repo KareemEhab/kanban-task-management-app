@@ -30,7 +30,7 @@ function App() {
     >
       <GridItem area="nav" minH={"100%"}>
         <Navbar
-          board={boards[selectedBoard]}
+          board={boards ? boards[selectedBoard] : null}
           isLoading={isLoading}
           updateBoard={updateBoard}
           handleDeleteBoard={handleDeleteBoard}
@@ -61,7 +61,7 @@ function App() {
         css={{ "&::-webkit-scrollbar": { display: "none" } }}
       >
         <BoardDetails
-          board={boards[selectedBoard]}
+          board={boards ? boards[selectedBoard] : null}
           isLoading={isLoading}
           updateBoard={updateBoard}
         />

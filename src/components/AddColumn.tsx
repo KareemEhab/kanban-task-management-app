@@ -3,7 +3,7 @@ import AddColumnModal from "./AddColumnModal";
 import { Board } from "../hooks/useBoards";
 
 interface Props {
-  board: Board;
+  board: Board | null;
   updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
 }
 

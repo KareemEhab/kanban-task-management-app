@@ -25,35 +25,39 @@ export interface Board {
 }
 
 const useBoards = () => {
-  const [boards, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState<Board[] | null>(null); // Initialize as null
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
   async function createBoard(newData: Partial<Board>) {
     const response = await apiClient.post("/boards", newData);
-    setBoards([...boards, response.data]);
+    setBoards((prevBoards) => [...(prevBoards || []), response.data]); // Check if prevBoards is null
   }
 
   async function updateBoard(newData: Partial<Board>, _id: string) {
     const response = await apiClient.put(`/boards/${_id}`, newData);
-    const updatedBoards = boards.map((board) => {
-      if (board._id === _id) {
-        return { ...board, ...response.data };
-      }
-      return board;
+    setBoards((prevBoards) => {
+      if (!prevBoards) return null;
+      return prevBoards.map((board) => {
+        if (board._id === _id) {
+          return { ...board, ...response.data };
+        }
+        return board;
+      });
     });
-    setBoards(updatedBoards);
   }
 
   async function deleteBoard(_id: string) {
     await apiClient.delete(`/boards/${_id}`);
-    setBoards((prevBoards) => prevBoards.filter((board) => board._id !== _id));
+    setBoards((prevBoards) => {
+      if (!prevBoards) return null;
+      return prevBoards.filter((board) => board._id !== _id);
+    });
   }
 
   useEffect(() => {
     const controller = new AbortController();
 
-    setLoading(true);
     apiClient
       .get("/boards", {
         signal: controller.signal,

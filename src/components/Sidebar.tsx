@@ -16,7 +16,7 @@ import AddBoardModal from "./AddBoardModal";
 import { Board } from "../hooks/useBoards";
 
 interface Props {
-  boards: Board[];
+  boards: Board[] | null;
   isLoading: boolean;
   selectedBoard: number;
   setSelectedBoard: (index: number) => void;
@@ -41,7 +41,7 @@ const Sidebar = ({
           ALL BOARDS (2)
         </Text>
         <VStack minW="100%" paddingRight="1.5rem" marginTop="1.5rem" gap={0}>
-          {boards.map((board, index) => {
+          {boards?.map((board, index) => {
             return (
               <SidebarBtn
                 key={board._id}
