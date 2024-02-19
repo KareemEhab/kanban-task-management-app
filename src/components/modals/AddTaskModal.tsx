@@ -23,7 +23,7 @@ import { useRef, useState } from "react";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  board: Board;
+  board: Board | null;
   updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
 }
 
@@ -93,10 +93,10 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
 
     const tempBoard: Partial<Board> = {
       ...board,
-      tasks: [...board.tasks, newTask],
+      tasks: [...(board?.tasks ?? []), newTask],
     };
     onClose();
-    toast.promise(updateBoard(tempBoard, board._id), {
+    toast.promise(updateBoard(tempBoard, board?._id ?? ""), {
       success: { title: "Board updated", position: "top-right" },
       error: { title: "An error occured", position: "top-right" },
       loading: { title: "Updating board...", position: "top-right" },
@@ -161,7 +161,7 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
             <FormControl marginTop="1rem">
               <FormLabel>Current Status</FormLabel>
               <Select ref={statusRef}>
-                {board.columns.map((column, index) => (
+                {board?.columns.map((column, index) => (
                   <option key={index} value={column}>
                     {column}
                   </option>

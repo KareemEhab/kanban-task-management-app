@@ -15,7 +15,7 @@ import { Board } from "../../hooks/useBoards";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  board: Board;
+  board: Board | null;
   handleDeleteBoard: (_id: string) => Promise<void>;
 }
 
@@ -29,7 +29,7 @@ const DeleteBoardModal = ({
 
   const handleBoardDelete = () => {
     onClose();
-    toast.promise(handleDeleteBoard(board._id), {
+    toast.promise(handleDeleteBoard(board?._id ?? ""), {
       success: { title: "Board deleted", position: "top-right" },
       error: { title: "An error occured", position: "top-right" },
       loading: { title: "Deleting board...", position: "top-right" },
@@ -46,7 +46,7 @@ const DeleteBoardModal = ({
         <ModalBody>
           <VStack>
             <Text color="gray.500" fontSize="0.85rem">
-              Are you sure you want to delete the "{board.name}" board? This
+              Are you sure you want to delete the "{board?.name}" board? This
               action will remove all columns and tasks and cannot be reversed.
             </Text>
             <HStack width={"100%"}>

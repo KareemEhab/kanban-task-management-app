@@ -48,7 +48,6 @@ const Navbar = ({
   } = useDisclosure();
 
   if (isLoading) return null;
-  if (!board) return null;
 
   return (
     <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
@@ -56,46 +55,48 @@ const Navbar = ({
       <Text fontSize="2rem" fontWeight="bold">
         kanban
       </Text>
-      <HStack flex="1" justify="space-between" ml="9rem">
-        <Text fontSize="1.5rem" fontWeight="bold">
-          {board.name}
-        </Text>
-        <HStack>
-          <Button
-            borderRadius="full"
-            padding="1.5rem"
-            bg="purple.800"
-            onClick={onAddTaskOpen}
-          >
-            + Add New Task
-          </Button>
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<CiMenuKebab />}
-              bg="gray.700"
-              fontSize="1.5rem"
-            />
-            <MenuList>
-              <MenuItem
-                color="gray.500"
-                fontWeight="bold"
-                onClick={onEditBoardOpen}
-              >
-                Edit board
-              </MenuItem>
-              <MenuItem
-                color="red.500"
-                fontWeight="bold"
-                onClick={onDeleteBoardOpen}
-              >
-                Delete board
-              </MenuItem>
-            </MenuList>
-          </Menu>
+      {board && (
+        <HStack flex="1" justify="space-between" ml="9rem">
+          <Text fontSize="1.5rem" fontWeight="bold">
+            {board?.name}
+          </Text>
+          <HStack>
+            <Button
+              borderRadius="full"
+              padding="1.5rem"
+              bg="purple.800"
+              onClick={onAddTaskOpen}
+            >
+              + Add New Task
+            </Button>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<CiMenuKebab />}
+                bg="gray.700"
+                fontSize="1.5rem"
+              />
+              <MenuList>
+                <MenuItem
+                  color="gray.500"
+                  fontWeight="bold"
+                  onClick={onEditBoardOpen}
+                >
+                  Edit board
+                </MenuItem>
+                <MenuItem
+                  color="red.500"
+                  fontWeight="bold"
+                  onClick={onDeleteBoardOpen}
+                >
+                  Delete board
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
         </HStack>
-      </HStack>
+      )}
       <AddTaskModal
         isOpen={isAddTaskOpen}
         onClose={onAddTaskClose}

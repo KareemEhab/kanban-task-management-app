@@ -1,7 +1,7 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import BoardDetails from "./components/Board";
+import BoardDetails from "./components/BoardDetails";
 import useBoards from "./hooks/useBoards";
 import { useState } from "react";
 
@@ -60,11 +60,13 @@ function App() {
         overflowY="scroll"
         css={{ "&::-webkit-scrollbar": { display: "none" } }}
       >
-        <BoardDetails
-          board={boards ? boards[selectedBoard] : null}
-          isLoading={isLoading}
-          updateBoard={updateBoard}
-        />
+        {boards && boards?.length > 0 && (
+          <BoardDetails
+            board={boards ? boards[selectedBoard] : null}
+            isLoading={isLoading}
+            updateBoard={updateBoard}
+          />
+        )}
       </GridItem>
     </Grid>
   );
