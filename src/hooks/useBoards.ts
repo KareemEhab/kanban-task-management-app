@@ -12,7 +12,7 @@ export interface Task {
   _id: string;
   name: string;
   description: string;
-  subTasks: SubTask[];
+  subTasks: Partial<SubTask>[];
   currentStatus: string;
 }
 
@@ -20,7 +20,7 @@ export interface Board {
   _id: string;
   name: string;
   columns: string[];
-  tasks: Task[];
+  tasks: Partial<Task>[];
   dateCreated: string;
 }
 

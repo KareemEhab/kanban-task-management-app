@@ -23,7 +23,11 @@ function App() {
       height="100vh"
     >
       <GridItem area="nav" minH={"100%"}>
-        <Navbar />
+        <Navbar
+          board={boards[selectedBoard]}
+          isLoading={isLoading}
+          updateBoard={updateBoard}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem

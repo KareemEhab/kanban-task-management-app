@@ -9,10 +9,24 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { CiMenuKebab } from "react-icons/ci";
+import { Board } from "../hooks/useBoards";
+import AddTaskModal from "./AddTaskModal";
 
-const Navbar = () => {
+interface Props {
+  board: Board;
+  isLoading: boolean;
+  updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
+}
+
+const Navbar = ({ board, isLoading, updateBoard }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  if (isLoading) return null;
+  if (!board) return null;
+
   return (
     <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
       <Image />
@@ -21,10 +35,15 @@ const Navbar = () => {
       </Text>
       <HStack flex="1" justify="space-between" ml="9rem">
         <Text fontSize="1.5rem" fontWeight="bold">
-          Marketing plan
+          {board.name}
         </Text>
         <Box>
-          <Button borderRadius="full" padding="1.5rem" bg="purple.800">
+          <Button
+            borderRadius="full"
+            padding="1.5rem"
+            bg="purple.800"
+            onClick={onOpen}
+          >
             + Add New Task
           </Button>
           <Menu>
@@ -44,6 +63,12 @@ const Navbar = () => {
           </Menu>
         </Box>
       </HStack>
+      <AddTaskModal
+        isOpen={isOpen}
+        onClose={onClose}
+        board={board}
+        updateBoard={updateBoard}
+      />
     </HStack>
   );
 };
