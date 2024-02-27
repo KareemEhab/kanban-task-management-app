@@ -71,9 +71,9 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
     onClose();
     if (JSON.stringify(board) !== JSON.stringify(updatedBoard))
       toast.promise(updateBoard(updatedBoard, board._id), {
-        success: { title: "Changes saved.", position: "top-right" },
-        error: { title: "An error has occured.", position: "top-right" },
-        loading: { title: "Saving changes...", position: "top-right" },
+        success: { title: "Changes saved.", position: "bottom-right" },
+        error: { title: "An error has occured.", position: "bottom-right" },
+        loading: { title: "Saving changes...", position: "bottom-right" },
       });
 
     onClose(); // Call onClose to close the modal

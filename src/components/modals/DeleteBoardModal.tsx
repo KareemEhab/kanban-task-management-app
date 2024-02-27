@@ -30,9 +30,9 @@ const DeleteBoardModal = ({
   const handleBoardDelete = () => {
     onClose();
     toast.promise(handleDeleteBoard(board?._id ?? ""), {
-      success: { title: "Board deleted", position: "top-right" },
-      error: { title: "An error occured", position: "top-right" },
-      loading: { title: "Deleting board...", position: "top-right" },
+      success: { title: "Board deleted.", position: "bottom-right" },
+      error: { title: "An error occured.", position: "bottom-right" },
+      loading: { title: "Deleting board...", position: "bottom-right" },
     });
   };
 

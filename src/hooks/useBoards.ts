@@ -57,6 +57,7 @@ const useBoards = () => {
 
   useEffect(() => {
     const controller = new AbortController();
+    setLoading(true);
 
     apiClient
       .get("/boards", {

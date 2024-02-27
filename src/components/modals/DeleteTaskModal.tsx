@@ -38,9 +38,9 @@ const DeleteTaskModal = ({
     };
     onClose();
     toast.promise(updateBoard(updatedBoard, board._id), {
-      success: { title: "Task deleted.", position: "top-right" },
-      error: { title: "An error occured.", position: "top-right" },
-      loading: { title: "Deleting task...", position: "top-right" },
+      success: { title: "Task deleted.", position: "bottom-right" },
+      error: { title: "An error occured.", position: "bottom-right" },
+      loading: { title: "Deleting task...", position: "bottom-right" },
     });
   };
 

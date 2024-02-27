@@ -58,9 +58,9 @@ const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
     };
     onClose();
     toast.promise(createBoard(board), {
-      success: { title: "Board created", position: "top-right" },
-      error: { title: "An error occured", position: "top-right" },
-      loading: { title: "Creating board...", position: "top-right" },
+      success: { title: "Board created.", position: "bottom-right" },
+      error: { title: "An error occured.", position: "bottom-right" },
+      loading: { title: "Creating board...", position: "bottom-right" },
     });
   };
 

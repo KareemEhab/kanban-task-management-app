@@ -97,9 +97,9 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
     };
     onClose();
     toast.promise(updateBoard(tempBoard, board?._id ?? ""), {
-      success: { title: "Board updated", position: "top-right" },
-      error: { title: "An error occured", position: "top-right" },
-      loading: { title: "Updating board...", position: "top-right" },
+      success: { title: "Board updated.", position: "bottom-right" },
+      error: { title: "An error occured.", position: "bottom-right" },
+      loading: { title: "Updating board...", position: "bottom-right" },
     });
   };
 
