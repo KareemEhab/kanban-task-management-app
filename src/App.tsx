@@ -60,13 +60,11 @@ function App() {
         overflowY="scroll"
         css={{ "&::-webkit-scrollbar": { display: "none" } }}
       >
-        {boards && boards?.length > 0 && (
-          <BoardDetails
-            board={boards ? boards[selectedBoard] : null}
-            isLoading={isLoading}
-            updateBoard={updateBoard}
-          />
-        )}
+        <BoardDetails
+          board={boards ? boards[selectedBoard] : null}
+          isLoading={isLoading}
+          updateBoard={updateBoard}
+        />
       </GridItem>
     </Grid>
   );

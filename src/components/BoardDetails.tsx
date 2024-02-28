@@ -1,7 +1,8 @@
-import { HStack, Spinner } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import Column from "./Column";
 import AddColumn from "./AddColumn";
 import { Board } from "../hooks/useBoards";
+import SkeletonColumn from "./SkeletonColumn";
 
 interface Props {
   board: Board | null;
@@ -18,20 +19,21 @@ const BoardDetails = ({ board, isLoading, updateBoard }: Props) => {
       paddingLeft="1.5rem"
       gap={6}
     >
-      {(isLoading || !board) && <Spinner />}
-      {board?.columns.map((column) => {
-        return (
-          <Column
-            key={column}
-            board={board}
-            tasks={board.tasks.filter((task) => task.currentStatus === column)}
-            columnName={column}
-            updateBoard={updateBoard}
-          />
-        );
-      })}
+      {isLoading && <SkeletonColumn />}
+      {isLoading && <SkeletonColumn />}
+      {isLoading && <SkeletonColumn />}
 
-      <AddColumn board={board} updateBoard={updateBoard} />
+      {board?.columns.map((column) => (
+        <Column
+          key={column}
+          board={board}
+          tasks={board.tasks.filter((task) => task.currentStatus === column)}
+          columnName={column}
+          updateBoard={updateBoard}
+        />
+      ))}
+
+      {!isLoading && <AddColumn board={board} updateBoard={updateBoard} />}
     </HStack>
   );
 };

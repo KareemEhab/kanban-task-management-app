@@ -1,6 +1,7 @@
 import {
   Box,
   HStack,
+  Skeleton,
   Switch,
   Text,
   VStack,
@@ -33,12 +34,11 @@ const Sidebar = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { toggleColorMode, colorMode } = useColorMode();
 
-  if (isLoading) return;
   return (
     <VStack minHeight="100%" justify="space-between" width="100%" bg="gray.700">
       <Box width="100%">
         <Text color="gray.400" marginTop="1.5rem" paddingLeft="1.5rem">
-          ALL BOARDS ({boards?.length})
+          ALL BOARDS ({isLoading ? 0 : boards?.length})
         </Text>
         <VStack minW="100%" paddingRight="1.5rem" marginTop="1.5rem" gap={0}>
           {boards?.map((board, index) => {
@@ -56,14 +56,27 @@ const Sidebar = ({
               </SidebarBtn>
             );
           })}
-          <SidebarBtn
-            color="purple.800"
-            icon={CiGrid32}
-            isSelected={false}
-            onClick={onOpen}
-          >
-            + Create New Board
-          </SidebarBtn>
+          {isLoading && (
+            <>
+              <Skeleton
+                width="100%"
+                height="3rem"
+                borderRadius="full"
+                borderTopLeftRadius="0"
+                borderBottomLeftRadius="0"
+              />
+            </>
+          )}
+          {!isLoading && (
+            <SidebarBtn
+              color="purple.800"
+              icon={CiGrid32}
+              isSelected={false}
+              onClick={onOpen}
+            >
+              + Create New Board
+            </SidebarBtn>
+          )}
           <AddBoardModal
             isOpen={isOpen}
             onClose={onClose}

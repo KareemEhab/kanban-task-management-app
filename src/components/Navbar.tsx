@@ -47,15 +47,13 @@ const Navbar = ({
     onClose: onDeleteBoardClose,
   } = useDisclosure();
 
-  if (isLoading) return null;
-
   return (
     <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
       <Image />
       <Text fontSize="2rem" fontWeight="bold">
         kanban
       </Text>
-      {board && (
+      {!isLoading && (
         <HStack flex="1" justify="space-between" ml="9rem">
           <Text fontSize="1.5rem" fontWeight="bold">
             {board?.name}
