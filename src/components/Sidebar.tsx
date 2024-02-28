@@ -23,6 +23,7 @@ interface Props {
   setSelectedBoard: (index: number) => void;
   createBoard: (board: Partial<Board>) => Promise<void>;
   toggleSidebar: () => void;
+  showSidebar: boolean;
 }
 
 const Sidebar = ({
@@ -32,17 +33,27 @@ const Sidebar = ({
   setSelectedBoard,
   createBoard,
   toggleSidebar,
+  showSidebar,
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <VStack minHeight="100%" justify="space-between" width="100%" bg="gray.700">
-      <Box width="100%" overflowX="auto">
-        <Text color="gray.400" marginTop="1.5rem" paddingLeft="1.5rem">
-          ALL BOARDS ({isLoading ? 0 : boards?.length})
-        </Text>
-        <VStack minW="100%" paddingRight="1.5rem" marginTop="1.5rem" gap={0}>
+      <Box width="100%" overflow="hidden">
+        {showSidebar && (
+          <Text color="gray.400" marginTop="1.5rem" paddingLeft="1.5rem">
+            ALL BOARDS ({isLoading ? 0 : boards?.length})
+          </Text>
+        )}
+        <VStack
+          minW="100%"
+          maxH="38rem"
+          paddingRight="1.5rem"
+          marginTop="1.5rem"
+          gap={0}
+          overflowY="auto"
+        >
           {boards?.map((board, index) => {
             return (
               <SidebarBtn

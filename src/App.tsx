@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, Show } from "@chakra-ui/react";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import BoardDetails from "./components/BoardDetails";
@@ -24,11 +24,11 @@ function App() {
     <Grid
       templateAreas={{
         base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
+        md: `"nav nav" "aside main"`,
       }}
       templateColumns={{
         base: "1fr",
-        lg: `${showSidebar ? "260px " : "0"} 1fr`,
+        md: `${showSidebar ? "260px " : "0"} 1fr`,
       }}
       templateRows="auto 1fr"
       height="100vh"
@@ -41,17 +41,26 @@ function App() {
           handleDeleteBoard={handleDeleteBoard}
         />
       </GridItem>
-      <GridItem area="aside" minHeight="100%" minWidth="100%">
-        <Sidebar
-          boards={boards}
-          selectedBoard={selectedBoard}
-          setSelectedBoard={setSelectedBoard}
-          isLoading={isLoading}
-          createBoard={createBoard}
-          toggleSidebar={toggleSidebar}
-        />
-      </GridItem>
-      <GridItem area="main" minHeight="100%" minWidth="100%" overflowY="scroll">
+      <Show above="md">
+        <GridItem area="aside" minHeight="100%" minWidth="100%">
+          <Sidebar
+            boards={boards}
+            selectedBoard={selectedBoard}
+            setSelectedBoard={setSelectedBoard}
+            isLoading={isLoading}
+            createBoard={createBoard}
+            toggleSidebar={toggleSidebar}
+            showSidebar={showSidebar}
+          />
+        </GridItem>
+      </Show>
+      <GridItem
+        area="main"
+        minHeight="100%"
+        minWidth="100%"
+        overflowY="scroll"
+        css={{ "&::-webkit-scrollbar": { display: "none" } }}
+      >
         <BoardDetails
           board={boards ? boards[selectedBoard] : null}
           isLoading={isLoading}

@@ -7,14 +7,17 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Show,
   Text,
+  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { CiMenuKebab } from "react-icons/ci";
 import { Board } from "../hooks/useBoards";
 import AddTaskModal from "./modals/AddTaskModal";
 import AddColumnModal from "./modals/AddColumnModal";
 import DeleteBoardModal from "./modals/DeleteBoardModal";
+import { CiMenuKebab } from "react-icons/ci";
+import { FaPlus } from "react-icons/fa";
 
 interface Props {
   board: Board | null;
@@ -29,6 +32,11 @@ const Navbar = ({
   updateBoard,
   handleDeleteBoard,
 }: Props) => {
+  const addButtonContent = useBreakpointValue({
+    base: <FaPlus />,
+    md: "+ Add New Task",
+  });
+
   const {
     isOpen: isAddTaskOpen,
     onOpen: onAddTaskOpen,
@@ -49,12 +57,14 @@ const Navbar = ({
 
   return (
     <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
-      <Image />
-      <Text fontSize="2rem" fontWeight="bold">
-        kanban
-      </Text>
+      <Show above="md">
+        <Image />
+        <Text fontSize="2rem" fontWeight="bold">
+          kanban
+        </Text>
+      </Show>
       {!isLoading && (
-        <HStack flex="1" justify="space-between" ml="9rem">
+        <HStack flex="1" justify="space-between" ml={{ base: "0", md: "9rem" }}>
           <Text fontSize="1.5rem" fontWeight="bold">
             {board?.name}
           </Text>
@@ -64,8 +74,9 @@ const Navbar = ({
               padding="1.5rem"
               bg="purple.800"
               onClick={onAddTaskOpen}
+              fontWeight="bold"
             >
-              + Add New Task
+              {addButtonContent}
             </Button>
             <Menu>
               <MenuButton
