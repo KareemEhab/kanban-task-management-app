@@ -12,7 +12,7 @@ import { WiDaySunny } from "react-icons/wi";
 import { MdDarkMode } from "react-icons/md";
 import SidebarBtn from "./SidebarBtn";
 import { CiGrid32 } from "react-icons/ci";
-import { BiSolidHide } from "react-icons/bi";
+import { BiSolidHide, BiSolidShow } from "react-icons/bi";
 import AddBoardModal from "./modals/AddBoardModal";
 import { Board } from "../hooks/useBoards";
 
@@ -125,7 +125,7 @@ const Sidebar = ({
         <Box width="100%" paddingRight="1.5rem" overflow="visible">
           <SidebarBtn
             color="gray.400"
-            icon={BiSolidHide}
+            icon={showSidebar ? BiSolidHide : BiSolidShow}
             isSelected={false}
             onClick={toggleSidebar}
           >
