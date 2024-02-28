@@ -22,6 +22,7 @@ interface Props {
   selectedBoard: number;
   setSelectedBoard: (index: number) => void;
   createBoard: (board: Partial<Board>) => Promise<void>;
+  toggleSidebar: () => void;
 }
 
 const Sidebar = ({
@@ -30,13 +31,14 @@ const Sidebar = ({
   selectedBoard,
   setSelectedBoard,
   createBoard,
+  toggleSidebar,
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <VStack minHeight="100%" justify="space-between" width="100%" bg="gray.700">
-      <Box width="100%">
+      <Box width="100%" overflowX="auto">
         <Text color="gray.400" marginTop="1.5rem" paddingLeft="1.5rem">
           ALL BOARDS ({isLoading ? 0 : boards?.length})
         </Text>
@@ -93,6 +95,7 @@ const Sidebar = ({
             bg="gray.800"
             gap="1.5rem"
             borderRadius={5}
+            overflow="hidden"
           >
             <Text fontSize="1.8rem">
               <WiDaySunny />
@@ -108,12 +111,12 @@ const Sidebar = ({
             </Text>
           </HStack>
         </HStack>
-        <Box width="100%" paddingRight="1.5rem">
+        <Box width="100%" paddingRight="1.5rem" overflow="visible">
           <SidebarBtn
             color="gray.400"
             icon={BiSolidHide}
             isSelected={false}
-            onClick={() => {}}
+            onClick={toggleSidebar}
           >
             Hide Sidebar
           </SidebarBtn>

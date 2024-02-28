@@ -1,4 +1,4 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import BoardDetails from "./components/BoardDetails";
@@ -9,10 +9,15 @@ function App() {
   const { boards, isLoading, createBoard, updateBoard, deleteBoard } =
     useBoards();
   const [selectedBoard, setSelectedBoard] = useState(0);
+  const [showSidebar, setShowSidebar] = useState(true); // State to control sidebar visibility
 
   const handleDeleteBoard = (_id: string) => {
     setSelectedBoard(0);
     return deleteBoard(_id);
+  };
+
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
   };
 
   return (
@@ -23,7 +28,7 @@ function App() {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "260px 1fr",
+        lg: `${showSidebar ? "260px " : "0"} 1fr`,
       }}
       templateRows="auto 1fr"
       height="100vh"
@@ -36,30 +41,17 @@ function App() {
           handleDeleteBoard={handleDeleteBoard}
         />
       </GridItem>
-      <Show above="lg">
-        <GridItem
-          area="aside"
-          minHeight="100%"
-          minWidth="100%"
-          overflowY="scroll"
-          css={{ "&::-webkit-scrollbar": { display: "none" } }}
-        >
-          <Sidebar
-            boards={boards}
-            selectedBoard={selectedBoard}
-            setSelectedBoard={setSelectedBoard}
-            isLoading={isLoading}
-            createBoard={createBoard}
-          />
-        </GridItem>
-      </Show>
-      <GridItem
-        area="main"
-        minHeight="100%"
-        minWidth="100%"
-        overflowY="scroll"
-        css={{ "&::-webkit-scrollbar": { display: "none" } }}
-      >
+      <GridItem area="aside" minHeight="100%" minWidth="100%">
+        <Sidebar
+          boards={boards}
+          selectedBoard={selectedBoard}
+          setSelectedBoard={setSelectedBoard}
+          isLoading={isLoading}
+          createBoard={createBoard}
+          toggleSidebar={toggleSidebar}
+        />
+      </GridItem>
+      <GridItem area="main" minHeight="100%" minWidth="100%" overflowY="scroll">
         <BoardDetails
           board={boards ? boards[selectedBoard] : null}
           isLoading={isLoading}
