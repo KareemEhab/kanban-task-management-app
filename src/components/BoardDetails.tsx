@@ -33,7 +33,9 @@ const BoardDetails = ({ board, isLoading, updateBoard }: Props) => {
         />
       ))}
 
-      {!isLoading && <AddColumn board={board} updateBoard={updateBoard} />}
+      {!isLoading && board && (
+        <AddColumn board={board} updateBoard={updateBoard} />
+      )}
     </HStack>
   );
 };
