@@ -104,15 +104,17 @@ const Navbar = ({
             </Show>
           </HStack>
           <HStack>
-            <Button
-              borderRadius="full"
-              padding="1.5rem"
-              bg="purple.800"
-              onClick={onAddTaskOpen}
-              fontWeight="bold"
-            >
-              {addButtonContent}
-            </Button>
+            {boards && boards?.length > 0 && (
+              <Button
+                borderRadius="full"
+                padding="1.5rem"
+                bg="purple.800"
+                onClick={onAddTaskOpen}
+                fontWeight="bold"
+              >
+                {addButtonContent}
+              </Button>
+            )}
             <Menu>
               <MenuButton
                 as={IconButton}
@@ -122,20 +124,24 @@ const Navbar = ({
                 fontSize="1.5rem"
               />
               <MenuList>
-                <MenuItem
-                  color="gray.500"
-                  fontWeight="bold"
-                  onClick={onEditBoardOpen}
-                >
-                  Edit board
-                </MenuItem>
-                <MenuItem
-                  color="red.500"
-                  fontWeight="bold"
-                  onClick={onDeleteBoardOpen}
-                >
-                  Delete board
-                </MenuItem>
+                {boards && boards?.length > 0 && (
+                  <>
+                    <MenuItem
+                      color="gray.500"
+                      fontWeight="bold"
+                      onClick={onEditBoardOpen}
+                    >
+                      Edit board
+                    </MenuItem>
+                    <MenuItem
+                      color="red.500"
+                      fontWeight="bold"
+                      onClick={onDeleteBoardOpen}
+                    >
+                      Delete board
+                    </MenuItem>
+                  </>
+                )}
                 <MenuItem
                   color="red.500"
                   fontWeight="bold"
