@@ -33,12 +33,16 @@ function App() {
       templateRows="auto 1fr"
       height="100vh"
     >
-      <GridItem area="nav" minH={"100%"}>
+      <GridItem area="nav" minH="100%" maxW="100%" overflow="hidden">
         <Navbar
           board={boards ? boards[selectedBoard] : null}
           isLoading={isLoading}
           updateBoard={updateBoard}
           handleDeleteBoard={handleDeleteBoard}
+          boards={boards}
+          selectedBoard={selectedBoard}
+          setSelectedBoard={setSelectedBoard}
+          createBoard={createBoard}
         />
       </GridItem>
       <Show above="md">

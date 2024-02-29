@@ -18,12 +18,18 @@ import AddColumnModal from "./modals/AddColumnModal";
 import DeleteBoardModal from "./modals/DeleteBoardModal";
 import { CiMenuKebab } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import ResponsiveSidebarModal from "./modals/ResponsiveSidebarModal";
 
 interface Props {
   board: Board | null;
   isLoading: boolean;
   updateBoard: (board: Partial<Board>, _id: string) => Promise<void>;
   handleDeleteBoard: (_id: string) => Promise<void>;
+  boards: Board[] | null;
+  selectedBoard: number;
+  setSelectedBoard: (index: number) => void;
+  createBoard: (board: Partial<Board>) => Promise<void>;
 }
 
 const Navbar = ({
@@ -31,6 +37,10 @@ const Navbar = ({
   isLoading,
   updateBoard,
   handleDeleteBoard,
+  boards,
+  selectedBoard,
+  setSelectedBoard,
+  createBoard,
 }: Props) => {
   const addButtonContent = useBreakpointValue({
     base: <FaPlus />,
@@ -55,6 +65,12 @@ const Navbar = ({
     onClose: onDeleteBoardClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isResponsiveMenuOpen,
+    onOpen: onResponsiveMenuOpen,
+    onClose: onResponsiveMenuClose,
+  } = useDisclosure();
+
   return (
     <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
       <Show above="md">
@@ -65,9 +81,20 @@ const Navbar = ({
       </Show>
       {!isLoading && (
         <HStack flex="1" justify="space-between" ml={{ base: "0", md: "9rem" }}>
-          <Text fontSize="1.5rem" fontWeight="bold">
-            {board?.name}
-          </Text>
+          <HStack overflowX="hidden">
+            <Text
+              fontSize={{ base: "1rem", md: "1.5rem" }}
+              maxW={{ base: "12rem", md: "25rem" }}
+              fontWeight="bold"
+            >
+              {board?.name}
+            </Text>
+            <Show below="sm">
+              <Text onClick={onResponsiveMenuOpen}>
+                {isResponsiveMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              </Text>
+            </Show>
+          </HStack>
           <HStack>
             <Button
               borderRadius="full"
@@ -123,6 +150,15 @@ const Navbar = ({
         onClose={onDeleteBoardClose}
         board={board}
         handleDeleteBoard={handleDeleteBoard}
+      />
+      <ResponsiveSidebarModal
+        isOpen={isResponsiveMenuOpen}
+        onClose={onResponsiveMenuClose}
+        isLoading={isLoading}
+        boards={boards}
+        selectedBoard={selectedBoard}
+        setSelectedBoard={setSelectedBoard}
+        createBoard={createBoard}
       />
     </HStack>
   );
