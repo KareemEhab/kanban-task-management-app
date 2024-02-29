@@ -20,6 +20,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ResponsiveSidebarModal from "./modals/ResponsiveSidebarModal";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   board: Board | null;
@@ -42,6 +43,8 @@ const Navbar = ({
   setSelectedBoard,
   createBoard,
 }: Props) => {
+  const navigate = useNavigate();
+
   const addButtonContent = useBreakpointValue({
     base: <FaPlus />,
     md: "+ Add New Task",
@@ -70,6 +73,11 @@ const Navbar = ({
     onOpen: onResponsiveMenuOpen,
     onClose: onResponsiveMenuClose,
   } = useDisclosure();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
@@ -127,6 +135,13 @@ const Navbar = ({
                   onClick={onDeleteBoardOpen}
                 >
                   Delete board
+                </MenuItem>
+                <MenuItem
+                  color="red.500"
+                  fontWeight="bold"
+                  onClick={handleLogout}
+                >
+                  Logout
                 </MenuItem>
               </MenuList>
             </Menu>

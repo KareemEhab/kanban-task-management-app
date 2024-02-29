@@ -3,9 +3,16 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import BoardDetails from "./components/BoardDetails";
 import useBoards from "./hooks/useBoards";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) navigate("/login");
+  }, [navigate]);
+
   const { boards, isLoading, createBoard, updateBoard, deleteBoard } =
     useBoards();
   const [selectedBoard, setSelectedBoard] = useState(0);
