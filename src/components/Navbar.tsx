@@ -73,7 +73,11 @@ const Navbar = ({
     <HStack minW="100%" minH="100%" bg={bgColor} padding="1rem">
       <NavbarLogo />
       {!isLoading && (
-        <HStack flex="1" justify="space-between" ml={{ base: "0", md: "9rem" }}>
+        <HStack
+          flex="1"
+          justify="space-between"
+          ml={{ base: "0", md: "5.25rem" }}
+        >
           <HStack overflowX="hidden">
             <Text
               fontSize={{ base: "1rem", md: "1.5rem" }}

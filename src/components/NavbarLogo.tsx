@@ -4,7 +4,7 @@ const NavbarLogo = () => {
   const { colorMode } = useColorMode();
   return (
     <>
-      <Show below="md">
+      <Show below="sm">
         <svg width="24" height="25" xmlns="http://www.w3.org/2000/svg">
           <g fill="#635FC7" fillRule="evenodd">
             <rect width="6" height="25" rx="2" />
