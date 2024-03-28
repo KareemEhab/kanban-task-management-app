@@ -106,7 +106,13 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
       <ModalOverlay />
-      <ModalContent padding="0.5rem" width="30rem" maxW="full">
+      <ModalContent
+        padding="0.5rem"
+        width="30rem"
+        maxW="full"
+        maxH="80vh"
+        overflowY="auto"
+      >
         <ModalHeader fontWeight="bold">Add New Task</ModalHeader>
         <ModalBody>
           <VStack>
