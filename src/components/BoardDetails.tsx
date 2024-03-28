@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, useColorModeValue } from "@chakra-ui/react";
 import Column from "./Column";
 import AddColumn from "./AddColumn";
 import { Board } from "../hooks/useBoards";
@@ -11,6 +11,8 @@ interface Props {
 }
 
 const BoardDetails = ({ board, isLoading, updateBoard }: Props) => {
+  const bgColor = useColorModeValue("white.700", "gray.800");
+
   return (
     <HStack
       height="100%"
@@ -18,6 +20,7 @@ const BoardDetails = ({ board, isLoading, updateBoard }: Props) => {
       paddingTop="1.5rem"
       paddingLeft="1.5rem"
       gap={6}
+      bg={bgColor}
     >
       {isLoading && <SkeletonColumn />}
       {isLoading && <SkeletonColumn />}

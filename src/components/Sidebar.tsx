@@ -6,6 +6,7 @@ import {
   Text,
   VStack,
   useColorMode,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { WiDaySunny } from "react-icons/wi";
@@ -37,9 +38,11 @@ const Sidebar = ({
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { toggleColorMode, colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white.800", "gray.700");
+  const switchColor = useColorModeValue("white.700", "gray.800");
 
   return (
-    <VStack minHeight="100%" justify="space-between" width="100%" bg="gray.700">
+    <VStack minHeight="100%" justify="space-between" width="100%" bg={bgColor}>
       <Box width="100%" overflow="hidden">
         {showSidebar && (
           <Text color="gray.400" marginTop="1.5rem" paddingLeft="1.5rem">
@@ -103,13 +106,13 @@ const Sidebar = ({
             width="100%"
             paddingY="0.6rem"
             justify="center"
-            bg="gray.800"
+            bg={switchColor}
             gap="1.5rem"
             borderRadius={5}
             overflow="hidden"
           >
             <Text fontSize="1.8rem">
-              <WiDaySunny />
+              <WiDaySunny color="#828FA3" />
             </Text>
             <Switch
               colorScheme="purple"
@@ -118,7 +121,7 @@ const Sidebar = ({
               onChange={toggleColorMode}
             />
             <Text fontSize="1.5rem">
-              <MdDarkMode />
+              <MdDarkMode color="#828FA3" />
             </Text>
           </HStack>
         </HStack>

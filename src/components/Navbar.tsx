@@ -10,6 +10,7 @@ import {
   Show,
   Text,
   useBreakpointValue,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Board } from "../hooks/useBoards";
@@ -44,6 +45,7 @@ const Navbar = ({
   createBoard,
 }: Props) => {
   const navigate = useNavigate();
+  const bgColor = useColorModeValue("white.800", "gray.700");
 
   const addButtonContent = useBreakpointValue({
     base: <FaPlus />,
@@ -80,7 +82,7 @@ const Navbar = ({
   };
 
   return (
-    <HStack minW="100%" minH="100%" bg="gray.700" padding="1rem">
+    <HStack minW="100%" minH="100%" bg={bgColor} padding="1rem">
       <Show above="md">
         <Image />
         <Text fontSize="2rem" fontWeight="bold">
@@ -109,8 +111,9 @@ const Navbar = ({
                 borderRadius="full"
                 padding="1.5rem"
                 bg="purple.800"
-                onClick={onAddTaskOpen}
                 fontWeight="bold"
+                textColor="white.800"
+                onClick={onAddTaskOpen}
               >
                 {addButtonContent}
               </Button>
@@ -120,7 +123,7 @@ const Navbar = ({
                 as={IconButton}
                 aria-label="Options"
                 icon={<CiMenuKebab />}
-                bg="gray.700"
+                bg={bgColor}
                 fontSize="1.5rem"
               />
               <MenuList>

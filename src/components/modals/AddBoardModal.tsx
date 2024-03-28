@@ -13,6 +13,7 @@ import {
   Box,
   Text,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
 import { useRef, useState } from "react";
@@ -25,6 +26,8 @@ interface Props {
 }
 
 const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
+  const bgColor = useColorModeValue("white.800", "gray.700");
+
   const boardName = useRef<HTMLInputElement>(null);
   const [columns, setColumns] = useState(["TODO", "DOING"]);
   const toast = useToast();
@@ -67,7 +70,7 @@ const AddBoardModal = ({ isOpen, onClose, createBoard }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
       <ModalOverlay />
-      <ModalContent padding="0.5rem" width="30rem" maxW="full">
+      <ModalContent padding="0.5rem" width="30rem" maxW="full" bg={bgColor}>
         <ModalHeader fontWeight="bold">Add new board</ModalHeader>
         <ModalBody>
           <VStack>

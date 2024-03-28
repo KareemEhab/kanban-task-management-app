@@ -9,6 +9,7 @@ import {
   HStack,
   Text,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Board, Task } from "../../hooks/useBoards";
 
@@ -27,6 +28,8 @@ const DeleteTaskModal = ({
   task,
   updateBoard,
 }: Props) => {
+  const bgColor = useColorModeValue("white.800", "gray.700");
+
   const toast = useToast();
 
   const handleTaskDelete = () => {
@@ -47,7 +50,7 @@ const DeleteTaskModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent padding="1rem" width="30rem" maxW="full">
+      <ModalContent padding="1rem" width="30rem" maxW="full" bg={bgColor}>
         <ModalHeader fontWeight="bold" color="red.800">
           Delete this task?
         </ModalHeader>

@@ -29,6 +29,22 @@ const theme = extendTheme({
       800: "#EA5555",
     },
   },
+  components: {
+    Input: {
+      baseStyle: {
+        light: {
+          color: "gray.800",
+          placeholderColor: "gray.800",
+          placeholderOpacity: "25%",
+        },
+        dark: {
+          color: "white.800",
+          placeholderColor: "white.800",
+          placeholderOpacity: "25%",
+        },
+      },
+    },
+  },
 });
 
 export default theme;

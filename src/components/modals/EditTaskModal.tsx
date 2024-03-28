@@ -15,6 +15,7 @@ import {
   useToast,
   Textarea,
   Select,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
 import { Board, Task, SubTask } from "../../hooks/useBoards";
@@ -29,6 +30,8 @@ interface Props {
 }
 
 const AddTaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
+  const bgColor = useColorModeValue("white.800", "gray.700");
+
   const taskNameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const statusRef = useRef<HTMLSelectElement>(null);
@@ -126,7 +129,7 @@ const AddTaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
       <ModalOverlay />
-      <ModalContent padding="0.5rem" width="30rem" maxW="full">
+      <ModalContent padding="0.5rem" width="30rem" maxW="full" bg={bgColor}>
         <ModalHeader fontWeight="bold">Edit Task</ModalHeader>
         <ModalBody>
           <VStack>

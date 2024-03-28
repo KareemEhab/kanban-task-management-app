@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Text, useColorModeValue } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -16,13 +16,15 @@ const SidebarBtn = ({
   isSelected,
   onClick,
 }: Props) => {
+  const bgColor = useColorModeValue("white.800", "gray.700");
+
   return (
     <Button
       width="100%"
       borderRadius="full"
       borderTopLeftRadius="0"
       borderBottomLeftRadius="0"
-      bg={isSelected ? "purple.800" : "gray.700"}
+      bg={isSelected ? "purple.800" : bgColor}
       paddingLeft="1.5rem"
       paddingY="1.5rem"
       onClick={onClick}

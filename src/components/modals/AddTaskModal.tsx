@@ -15,6 +15,7 @@ import {
   useToast,
   Textarea,
   Select,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { MdCancel } from "react-icons/md";
 import { Board, Task, SubTask } from "../../hooks/useBoards";
@@ -28,6 +29,9 @@ interface Props {
 }
 
 const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
+  const bgColor = useColorModeValue("white.800", "gray.700");
+  const headerColor = useColorModeValue("gray.400", "white.800");
+
   const taskNameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const statusRef = useRef<HTMLSelectElement>(null);
@@ -112,12 +116,13 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
         maxW="full"
         maxH="80vh"
         overflowY="auto"
+        bg={bgColor}
       >
         <ModalHeader fontWeight="bold">Add New Task</ModalHeader>
         <ModalBody>
           <VStack>
             <FormControl isRequired>
-              <FormLabel>Task Name</FormLabel>
+              <FormLabel color={headerColor}>Task Name</FormLabel>
               <Input
                 placeholder="e.g. Take a coffee break"
                 ref={taskNameRef}
@@ -126,7 +131,7 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
               />
             </FormControl>
             <FormControl>
-              <FormLabel>Description</FormLabel>
+              <FormLabel color={headerColor}>Description</FormLabel>
               <Textarea
                 placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
                 ref={descriptionRef}
@@ -136,7 +141,7 @@ const AddTaskModal = ({ isOpen, onClose, board, updateBoard }: Props) => {
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel>Subtasks</FormLabel>
+              <FormLabel color={headerColor}>Subtasks</FormLabel>
               {subtasks.map((subtask, index) => {
                 return (
                   <HStack key={index}>

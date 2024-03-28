@@ -1,4 +1,10 @@
-import { Box, VStack, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  VStack,
+  Text,
+  useDisclosure,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import AddColumnModal from "./modals/AddColumnModal";
 import { Board } from "../hooks/useBoards";
 
@@ -9,12 +15,14 @@ interface Props {
 
 const AddColumn = ({ board, updateBoard }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const bgColor = useColorModeValue("white.600", "gray.750");
+
   return (
     <Box height="100%" paddingY="2.4rem" userSelect="none" onClick={onOpen}>
       <VStack
         height="100%"
         width="17.5rem"
-        bg="gray.750"
+        bg={bgColor}
         justify="center"
         align="center"
         _hover={{

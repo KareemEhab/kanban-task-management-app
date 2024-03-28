@@ -18,6 +18,7 @@ import {
   MenuItem,
   IconButton,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Board, Task, SubTask } from "../../hooks/useBoards";
 import { useEffect, useRef, useState } from "react";
@@ -34,6 +35,10 @@ interface Props {
 }
 
 const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
+  const bgColor = useColorModeValue("white.800", "gray.700");
+  const checkBoxColor = useColorModeValue("white.700", "gray.800");
+  const subTaskTextColor = useColorModeValue("gray.900", "white.800");
+
   const statusRef = useRef<HTMLSelectElement>(null);
   const [subtasks, setSubtasks] = useState<Partial<SubTask>[]>();
   const toast = useToast();
@@ -94,7 +99,7 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
       <ModalOverlay />
-      <ModalContent padding="0.75rem" width="30rem" maxW="full">
+      <ModalContent padding="0.75rem" width="30rem" maxW="full" bg={bgColor}>
         <HStack>
           <ModalHeader fontWeight="bold" flex="1">
             {task?.name}
@@ -104,7 +109,7 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
               as={IconButton}
               aria-label="Options"
               icon={<CiMenuKebab />}
-              bg="gray.700"
+              bg={bgColor}
               fontSize="1.5rem"
             />
             <MenuList>
@@ -131,13 +136,14 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
             <FormControl>
               <Text
                 fontSize="0.8rem"
-                color="gray.500"
+                color="gray.400"
+                fontWeight="500"
                 marginTop="0.5rem"
                 marginBottom="2rem"
               >
                 {task?.description}
               </Text>
-              <FormLabel color="gray.500" fontSize="0.9rem">
+              <FormLabel color={subTaskTextColor} fontSize="0.9rem">
                 Subtasks ({subtasks?.filter((subtask) => subtask.isDone).length}{" "}
                 of {subtasks?.length})
               </FormLabel>
@@ -145,7 +151,7 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
                 <Checkbox
                   key={subTask._id}
                   defaultChecked={subTask.isDone}
-                  bg="gray.900"
+                  bg={checkBoxColor}
                   width="100%"
                   padding="0.75rem"
                   borderRadius="0.25rem"
@@ -157,7 +163,8 @@ const TaskModal = ({ isOpen, onClose, board, task, updateBoard }: Props) => {
                     marginLeft="0.4rem"
                     fontSize="0.75rem"
                     fontWeight="bold"
-                    color={subTask.isDone ? "gray" : "white"}
+                    color={subTaskTextColor}
+                    opacity={subTask.isDone ? "50%" : "100%"}
                     textDecoration={subTask.isDone ? "line-through" : "none"}
                   >
                     {subTask.name}

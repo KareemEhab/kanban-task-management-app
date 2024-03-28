@@ -10,6 +10,7 @@ import {
   Text,
   VStack,
   useColorMode,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { WiDaySunny } from "react-icons/wi";
@@ -44,11 +45,12 @@ const ResponsiveSidebarModal = ({
     onClose: onBoardModalClose,
   } = useDisclosure();
   const { toggleColorMode, colorMode } = useColorMode();
+  const bgColor = useColorModeValue("white.800", "gray.700");
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent width="25rem" maxW="full">
+      <ModalContent width="25rem" maxW="full" bg={bgColor}>
         <ModalBody paddingX={0}>
           <VStack minHeight="100%" width="100%" bg="gray.700">
             <Box width="100%" overflow="hidden">
