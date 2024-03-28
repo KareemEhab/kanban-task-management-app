@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
-import theme from "./theme";
 import App from "./App";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
+import theme from "./theme";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
