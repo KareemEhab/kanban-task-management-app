@@ -6,6 +6,9 @@ const darkThemeConfig: ThemeConfig = {
 
 const theme = extendTheme({
   darkThemeConfig,
+  fonts: {
+    body: "Plus Jakarta Sans",
+  },
   colors: {
     white: {
       600: "#E4EBFA",
